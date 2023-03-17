@@ -92,8 +92,8 @@ public class DCompareCertificates extends JEscFrame {
 		jpButtons.add(jbOK,"tag ok");
 		jpButtons.add(jlMatch,"sgx");
 
-		DiffRowGenerator generator = DiffRowGenerator.create().showInlineDiffs(true).inlineDiffByWord(true)
-				.oldTag(f -> f ? "<font color='red'><b>" : "</b></font>")
+		DiffRowGenerator generator = DiffRowGenerator.create().showInlineDiffs(true).inlineDiffByWord(false)
+				.oldTag(f -> f ? "<font color='blue'><b>" : "</b></font>")
 				.newTag(f -> f ? "<font color='red'><b>" : "</b></font>").build();
 
 		try {
