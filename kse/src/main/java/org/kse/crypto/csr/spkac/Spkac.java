@@ -100,7 +100,7 @@ public class Spkac {
     private static ResourceBundle res = ResourceBundle.getBundle("org/kse/crypto/csr/spkac/resources");
 
     private static final String SPKAC_PROPERTY = "SPKAC";
-    private static final String NEWLINE = System.getProperty("line.separator");
+    private static final String NEWLINE = System.lineSeparator();
 
     private String challenge;
     private SpkacSubject subject;
@@ -341,7 +341,7 @@ public class Spkac {
             osw = new OutputStreamWriter(os);
 
             outputProperty(osw, SPKAC_PROPERTY,
-                           new String(Base64.encode(createSignedPublicKeyAndChallenge().getEncoded(ASN1Encoding.DER))));
+                           Base64.toBase64String(createSignedPublicKeyAndChallenge().getEncoded(ASN1Encoding.DER)));
             outputProperty(osw, CN_PROPERTY, subject.getCN());
             outputProperty(osw, OU_PROPERTY, subject.getOU());
             outputProperty(osw, O_PROPERTY, subject.getO());

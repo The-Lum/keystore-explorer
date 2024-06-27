@@ -54,10 +54,9 @@ public class DialogHelper {
      * @param keyPairType
      * @param privateKey
      * @param jcbSignatureAlgorithm
-     * @throws CryptoException
      */
     public static void populateSigAlgs(KeyPairType keyPairType, PrivateKey privateKey,
-                                       JComboBox<SignatureType> jcbSignatureAlgorithm) throws CryptoException {
+                                       JComboBox<SignatureType> jcbSignatureAlgorithm) {
 
         List<SignatureType> sigAlgs;
 
@@ -84,8 +83,12 @@ public class DialogHelper {
             break;
         case RSA:
         default:
-            KeyInfo keyInfo = KeyPairUtil.getKeyInfo(privateKey);
-            sigAlgs = SignatureType.rsaSignatureTypes(keyInfo.getSize());
+            try {
+                KeyInfo keyInfo = KeyPairUtil.getKeyInfo(privateKey);
+                sigAlgs = SignatureType.rsaSignatureTypes(keyInfo.getSize());
+            } catch (CryptoException e) {
+                sigAlgs = Collections.emptyList();
+            }
         }
 
         jcbSignatureAlgorithm.removeAllItems();
@@ -114,8 +117,8 @@ public class DialogHelper {
      */
     public static void populatePkcs10Challenge(Attribute[] attributes, JTextField textField) {
 
-        ASN1ObjectIdentifier pkcs9AtChallengepassword = PKCSObjectIdentifiers.pkcs_9_at_challengePassword;
-        populateTextField(attributes, textField, pkcs9AtChallengepassword);
+        ASN1ObjectIdentifier pkcs9AtChallengePassword = PKCSObjectIdentifiers.pkcs_9_at_challengePassword;
+        populateTextField(attributes, textField, pkcs9AtChallengePassword);
     }
 
     /**
