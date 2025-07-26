@@ -240,7 +240,7 @@ public class DViewCertificate extends JEscDialog {
 
 /////////////////////////////////////////////////////////
 
-        jpbValidityPercentage.SetBackground(Color.red);
+        jpbValidityPercentage.setBackground(Color.red);
         jpbValidityPercentage.setForeground(Color.green);
 
         jlValidityDays = new JLabel(res.getString("DViewCertificate.jlValidityDays.text"));
