@@ -238,6 +238,8 @@ public class DViewCertificate extends JEscDialog {
         jpbValidityPercentage.setToolTipText(res.getString("DViewCertificate.jpbValidityPercentage.tooltip"));
         jpbValidityPercentage.setStringPainted(true);
 
+        jpbValidityPercentage.putClientProperty("ProgressBar.background", Color.red);
+
         jlValidityDays = new JLabel(res.getString("DViewCertificate.jlValidityDays.text"));
         jtfValidityDays = new JTextField(40);
         jtfValidityDays.setToolTipText(res.getString("DViewCertificate.jtfValidityDays.tooltip"));
