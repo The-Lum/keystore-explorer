@@ -235,13 +235,17 @@ public class DViewCertificate extends JEscDialog {
 
         jlValidityPercentage = new JLabel(res.getString("DViewCertificate.jlValidityPercentage.text"));
         jpbValidityPercentage = new JProgressBar(0, 100);
-        jpbValidityPercentage.setToolTipText(res.getString("DViewCertificate.jpbValidityPercentage.tooltip") + "- test 2");
+        jpbValidityPercentage.setToolTipText(res.getString("DViewCertificate.jpbValidityPercentage.tooltip") + "- test decode");
         jpbValidityPercentage.setStringPainted(true);
 
 /////////////////////////////////////////////////////////
 
-        jpbValidityPercentage.setBackground(Color.red);
-        jpbValidityPercentage.setForeground(Color.green);
+        //jpbValidityPercentage.setBackground(Color.red);
+        //jpbValidityPercentage.setForeground(Color.green);
+
+        jpbValidityPercentage.setBackground(Color.decode("#c6455a")); //red
+        jpbValidityPercentage.setForeground(Color.decode("#27b26f")); //green
+
 
         jlValidityDays = new JLabel(res.getString("DViewCertificate.jlValidityDays.text"));
         jtfValidityDays = new JTextField(40);
