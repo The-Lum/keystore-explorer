@@ -66,7 +66,6 @@ public class TrustedCertificatePublicKeyDetailsAction extends KeyStoreExplorerAc
      * Show the public key details of the selected KeyStore entry.
      */
     public void showPublicKeySelectedEntry() {
-    protected void doAction() {
         try {
             KeyStoreHistory history = kseFrame.getActiveKeyStoreHistory();
             KeyStoreState currentState = history.getCurrentState();
