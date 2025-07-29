@@ -1657,6 +1657,9 @@ public final class KseFrame implements StatusBar {
         jtKeyStore.getInputMap().put((KeyStroke) renameKeyPairAction.getValue(Action.ACCELERATOR_KEY), RENAME_KEY);
         jtKeyStore.getActionMap().put(RENAME_KEY, renameKeyPairAction);
 
+        jtKeyStore.getInputMap().put((KeyStroke) keyPairPublicKeyDetailsAction.getValue(Action.ACCELERATOR_KEY), PLUS_KEY);
+        jtKeyStore.getActionMap().put(PLUS_KEY, keyPairPublicKeyDetailsAction);
+
         jtKeyStore.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_F10, InputEvent.SHIFT_DOWN_MASK, true), CONTEXT_MENU_KEY);
         jtKeyStore.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_CONTEXT_MENU, 0, true), CONTEXT_MENU_KEY);
         jtKeyStore.getActionMap().put(CONTEXT_MENU_KEY, new AbstractAction() {
@@ -2974,6 +2977,7 @@ public final class KseFrame implements StatusBar {
         if (type == KeyStoreType.MS_CAPI_PERSONAL || type == KeyStoreType.PKCS11) {
 
             keyPairPrivateKeyDetailsAction.setEnabled(false);
+            keyPairPublicKeyDetailsAction.setEnabled(false);
             keyDetailsAction.setEnabled(false);
 
             renameKeyAction.setEnabled(false);
@@ -2991,6 +2995,7 @@ public final class KseFrame implements StatusBar {
             jmKeyPairImportCaReply.setEnabled(false);
         } else {
             keyPairPrivateKeyDetailsAction.setEnabled(true);
+            keyPairPublicKeyDetailsAction.setEnabled(true);
             keyDetailsAction.setEnabled(true);
 
             renameKeyAction.setEnabled(true);
