@@ -63,6 +63,13 @@ public class KeyPairPrivateKeyDetailsAction extends KeyStoreExplorerAction {
      */
     @Override
     protected void doAction() {
+        showPrivateKeySelectedEntry();
+    }
+
+    /**
+     * Show the certificate details of the selected KeyStore entry.
+     */
+    public void showPrivateKeySelectedEntry() {
         try {
             KeyStoreHistory history = kseFrame.getActiveKeyStoreHistory();
             KeyStoreState currentState = history.getCurrentState();

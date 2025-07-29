@@ -1660,8 +1660,8 @@ public final class KseFrame implements StatusBar {
         //jtKeyStore.getInputMap().put((KeyStroke) keyPairPublicKeyDetailsAction.getValue(Action.ACCELERATOR_KEY), PLUS_KEY);
         //jtKeyStore.getActionMap().put(PLUS_KEY, keyPairPublicKeyDetailsAction);
 
-        jtKeyStore.getInputMap().put((KeyStroke) keyPairPrivateKeyDetailsAction.getValue(Action.ACCELERATOR_KEY), SUBTRACT_KEY);
-        jtKeyStore.getActionMap().put(SUBTRACT_KEY, keyPairPrivateKeyDetailsAction);
+        //jtKeyStore.getInputMap().put((KeyStroke) keyPairPrivateKeyDetailsAction.getValue(Action.ACCELERATOR_KEY), SUBTRACT_KEY);
+        //jtKeyStore.getActionMap().put(SUBTRACT_KEY, keyPairPrivateKeyDetailsAction);
 
         jtKeyStore.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_F10, InputEvent.SHIFT_DOWN_MASK, true), CONTEXT_MENU_KEY);
         jtKeyStore.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_CONTEXT_MENU, 0, true), CONTEXT_MENU_KEY);
@@ -1738,6 +1738,10 @@ public final class KseFrame implements StatusBar {
 
                 if (evt.getKeyCode() == KeyEvent.VK_ADD) {
                     viewSelectedEntryPublicKey();
+                }
+
+                if (evt.getKeyCode() == KeyEvent.VK_SUBTRACT) {
+                    viewSelectedEntryPrivateKey();
                 }
             }
 
@@ -2546,6 +2550,27 @@ public final class KseFrame implements StatusBar {
                 keyPairPublicKeyDetailsAction.showPublicKeySelectedEntry();
             } else if (KeyStoreUtil.isTrustedCertificateEntry(alias, keyStore)) {
                 trustedCertificatePublicKeyDetailsAction.showPublicKeySelectedEntry();
+            } else {
+                return;
+            }
+        } catch (Exception ex) {
+            DError.displayError(frame, ex);
+        }
+    }
+
+    private void viewSelectedEntryPrivateKey() {
+
+        KeyStoreHistory history = getActiveKeyStoreHistory();
+        KeyStore keyStore = history.getCurrentState().getKeyStore();
+        String alias = getSelectedEntryAlias();
+
+        if (alias == null) {
+            return;
+        }
+
+        try {
+            if (KeyStoreUtil.isKeyPairEntry(alias, keyStore)) {
+                keyPairPrivateKeyDetailsAction.showPrivateKeySelectedEntry();
             } else {
                 return;
             }
