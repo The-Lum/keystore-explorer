@@ -1733,7 +1733,7 @@ public final class KseFrame implements StatusBar {
                     renameSelectedEntry();
                 }
 
-                if (evt.getKeyCode() == KeyEvent.VK_PLUS) {
+                if (evt.getKeyCode() == KeyEvent.VK_ADD) {
                     viewSelectedEntryPublicKey();
                 }
             }
