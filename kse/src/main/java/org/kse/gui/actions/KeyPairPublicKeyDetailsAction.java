@@ -20,6 +20,7 @@
 package org.kse.gui.actions;
 
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.security.KeyStore;
 import java.security.PublicKey;
 import java.text.MessageFormat;
