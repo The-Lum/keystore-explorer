@@ -25,6 +25,7 @@ import java.security.PublicKey;
 import java.text.MessageFormat;
 
 import javax.swing.ImageIcon;
+import javax.swing.KeyStroke;
 
 import org.kse.crypto.x509.X509CertUtil;
 import org.kse.gui.KseFrame;
