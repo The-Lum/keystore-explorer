@@ -560,7 +560,7 @@ public final class KseFrame implements StatusBar {
     private static final String PASTE_KEY = "PASTE_KEY";
     private static final String RENAME_KEY = "RENAME_KEY";
     private static final String CONTEXT_MENU_KEY = "CONTEXT_MENU_KEY";
-    private static final String PLUS_KEY = "PLUS_KEY";
+    private static final String SUBTRACT_KEY = "SUBTRACT_KEY";
 
     public KseFrame() {
         initComponents();
@@ -1657,8 +1657,11 @@ public final class KseFrame implements StatusBar {
         jtKeyStore.getInputMap().put((KeyStroke) renameKeyPairAction.getValue(Action.ACCELERATOR_KEY), RENAME_KEY);
         jtKeyStore.getActionMap().put(RENAME_KEY, renameKeyPairAction);
 
-        jtKeyStore.getInputMap().put((KeyStroke) keyPairPublicKeyDetailsAction.getValue(Action.ACCELERATOR_KEY), PLUS_KEY);
-        jtKeyStore.getActionMap().put(PLUS_KEY, keyPairPublicKeyDetailsAction);
+        //jtKeyStore.getInputMap().put((KeyStroke) keyPairPublicKeyDetailsAction.getValue(Action.ACCELERATOR_KEY), PLUS_KEY);
+        //jtKeyStore.getActionMap().put(PLUS_KEY, keyPairPublicKeyDetailsAction);
+
+        jtKeyStore.getInputMap().put((KeyStroke) KeyPairPrivateKeyDetailsAction.getValue(Action.ACCELERATOR_KEY), SUBTRACT_KEY);
+        jtKeyStore.getActionMap().put(SUBTRACT_KEY, KeyPairPrivateKeyDetailsAction);
 
         jtKeyStore.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_F10, InputEvent.SHIFT_DOWN_MASK, true), CONTEXT_MENU_KEY);
         jtKeyStore.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_CONTEXT_MENU, 0, true), CONTEXT_MENU_KEY);
@@ -2542,7 +2545,7 @@ public final class KseFrame implements StatusBar {
             if (KeyStoreUtil.isKeyPairEntry(alias, keyStore)) {
                 keyPairPublicKeyDetailsAction.showPublicKeySelectedEntry();
             } else if (KeyStoreUtil.isTrustedCertificateEntry(alias, keyStore)) {
-                return;
+                trustedCertificatePublicKeyDetailsAction.showPublicKeySelectedEntry();
             } else {
                 return;
             }
