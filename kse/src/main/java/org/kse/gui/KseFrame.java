@@ -560,6 +560,7 @@ public final class KseFrame implements StatusBar {
     private static final String PASTE_KEY = "PASTE_KEY";
     private static final String RENAME_KEY = "RENAME_KEY";
     private static final String CONTEXT_MENU_KEY = "CONTEXT_MENU_KEY";
+    private static final String PLUS_KEY = "PLUS_KEY";
 
     public KseFrame() {
         initComponents();
@@ -1728,6 +1729,10 @@ public final class KseFrame implements StatusBar {
                 if (evt.getKeyCode() == KeyEvent.VK_F2) {
                     renameSelectedEntry();
                 }
+
+                if (evt.getKeyCode() == KeyEvent.VK_PLUS) {
+                    viewSelectedEntryPublicKey();
+                }
             }
 
             @Override
@@ -2514,6 +2519,29 @@ public final class KseFrame implements StatusBar {
                 renameTrustedCertificateAction.renameSelectedEntry();
             } else {
                 renameKeyAction.renameSelectedEntry();
+            }
+        } catch (Exception ex) {
+            DError.displayError(frame, ex);
+        }
+    }
+
+    private void viewSelectedEntryPublicKey() {
+
+        KeyStoreHistory history = getActiveKeyStoreHistory();
+        KeyStore keyStore = history.getCurrentState().getKeyStore();
+        String alias = getSelectedEntryAlias();
+
+        if (alias == null) {
+            return;
+        }
+
+        try {
+            if (KeyStoreUtil.isKeyPairEntry(alias, keyStore)) {
+                keyPairPublicKeyDetailsAction.showPublicKeySelectedEntry();
+            } else if (KeyStoreUtil.isTrustedCertificateEntry(alias, keyStore)) {
+                return;
+            } else {
+                return;
             }
         } catch (Exception ex) {
             DError.displayError(frame, ex);
