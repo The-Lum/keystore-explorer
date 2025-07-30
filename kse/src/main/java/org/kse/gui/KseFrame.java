@@ -1736,11 +1736,11 @@ public final class KseFrame implements StatusBar {
                     renameSelectedEntry();
                 }
 
-                if (evt.getKeyCode() == KeyEvent.VK_ADD) {
+                if (evt.getKeyChar() == '+') {
                     viewSelectedEntryPublicKey();
                 }
 
-                if (evt.getKeyCode() == KeyEvent.VK_SUBTRACT) {
+                if (evt.getKeyChar() == '-') {
                     viewSelectedEntryPrivateKey();
                 }
             }
