@@ -49,6 +49,7 @@ public class RenameKeyAction extends KeyStoreExplorerAction implements HistoryAc
     public RenameKeyAction(KseFrame kseFrame) {
         super(kseFrame);
 
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
         putValue(LONG_DESCRIPTION, res.getString("RenameKeyAction.statusbar"));
         putValue(NAME, res.getString("RenameKeyAction.text"));
         putValue(SHORT_DESCRIPTION, res.getString("RenameKeyAction.tooltip"));

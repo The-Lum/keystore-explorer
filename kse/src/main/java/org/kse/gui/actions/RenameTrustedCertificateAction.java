@@ -48,6 +48,7 @@ public class RenameTrustedCertificateAction extends KeyStoreExplorerAction imple
     public RenameTrustedCertificateAction(KseFrame kseFrame) {
         super(kseFrame);
 
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
         putValue(LONG_DESCRIPTION, res.getString("RenameTrustedCertificateAction.statusbar"));
         putValue(NAME, res.getString("RenameTrustedCertificateAction.text"));
         putValue(SHORT_DESCRIPTION, res.getString("RenameTrustedCertificateAction.tooltip"));

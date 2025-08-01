@@ -55,6 +55,7 @@ public class KeyDetailsAction extends KeyStoreExplorerAction {
     public KeyDetailsAction(KseFrame kseFrame) {
         super(kseFrame);
 
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
         putValue(LONG_DESCRIPTION, res.getString("KeyDetailsAction.statusbar"));
         putValue(NAME, res.getString("KeyDetailsAction.text"));
         putValue(SHORT_DESCRIPTION, res.getString("KeyDetailsAction.tooltip"));

@@ -46,6 +46,7 @@ public class TrustedCertificateDetailsAction extends KeyStoreExplorerAction {
     public TrustedCertificateDetailsAction(KseFrame kseFrame) {
         super(kseFrame);
 
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
         putValue(LONG_DESCRIPTION, res.getString("TrustedCertificateDetailsAction.statusbar"));
         putValue(NAME, res.getString("TrustedCertificateDetailsAction.text"));
         putValue(SHORT_DESCRIPTION, res.getString("TrustedCertificateDetailsAction.tooltip"));

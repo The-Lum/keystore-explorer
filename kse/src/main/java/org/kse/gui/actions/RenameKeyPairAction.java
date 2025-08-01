@@ -51,6 +51,7 @@ public class RenameKeyPairAction extends KeyStoreExplorerAction implements Histo
     public RenameKeyPairAction(KseFrame kseFrame) {
         super(kseFrame);
 
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
         putValue(LONG_DESCRIPTION, res.getString("RenameKeyPairAction.statusbar"));
         putValue(NAME, res.getString("RenameKeyPairAction.text"));
         putValue(SHORT_DESCRIPTION, res.getString("RenameKeyPairAction.tooltip"));

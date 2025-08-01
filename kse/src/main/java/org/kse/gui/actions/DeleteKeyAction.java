@@ -47,6 +47,7 @@ public class DeleteKeyAction extends KeyStoreExplorerAction implements HistoryAc
     public DeleteKeyAction(KseFrame kseFrame) {
         super(kseFrame);
 
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke((!OperatingSystem.isMacOs()) ? KeyEvent.VK_DELETE : KeyEvent.VK_BACK_SPACE, 0));
         putValue(LONG_DESCRIPTION, res.getString("DeleteKeyAction.statusbar"));
         putValue(NAME, res.getString("DeleteKeyAction.text"));
         putValue(SHORT_DESCRIPTION, res.getString("DeleteKeyAction.tooltip"));

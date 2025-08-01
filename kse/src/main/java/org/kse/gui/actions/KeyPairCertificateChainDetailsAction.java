@@ -47,6 +47,7 @@ public class KeyPairCertificateChainDetailsAction extends KeyStoreExplorerAction
     public KeyPairCertificateChainDetailsAction(KseFrame kseFrame) {
         super(kseFrame);
 
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
         putValue(LONG_DESCRIPTION, res.getString("KeyPairCertificateChainDetailsAction.statusbar"));
         putValue(NAME, res.getString("KeyPairCertificateChainDetailsAction.text"));
         putValue(SHORT_DESCRIPTION, res.getString("KeyPairCertificateChainDetailsAction.tooltip"));

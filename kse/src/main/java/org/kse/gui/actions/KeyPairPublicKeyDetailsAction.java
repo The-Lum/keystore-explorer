@@ -49,7 +49,7 @@ public class KeyPairPublicKeyDetailsAction extends KeyStoreExplorerAction {
     public KeyPairPublicKeyDetailsAction(KseFrame kseFrame) {
         super(kseFrame);
 
-        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke('+', 0));
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("typed +"));
         putValue(LONG_DESCRIPTION, res.getString("KeyPairPublicKeyDetailsAction.statusbar"));
         putValue(NAME, res.getString("KeyPairPublicKeyDetailsAction.text"));
         putValue(SHORT_DESCRIPTION, res.getString("KeyPairPublicKeyDetailsAction.tooltip"));
