@@ -20,11 +20,13 @@
 package org.kse.gui.actions;
 
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.security.KeyStore;
 import java.security.cert.X509Certificate;
 import java.text.MessageFormat;
 
 import javax.swing.ImageIcon;
+import javax.swing.KeyStroke;
 
 import org.kse.crypto.x509.X509CertUtil;
 import org.kse.gui.KseFrame;
