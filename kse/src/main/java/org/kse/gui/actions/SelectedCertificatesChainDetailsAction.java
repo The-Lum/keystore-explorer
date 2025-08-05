@@ -40,7 +40,14 @@ public class SelectedCertificatesChainDetailsAction extends KeyStoreExplorerActi
     }
 
     @Override
-    protected void doAction() {
+   protected void doAction() {
+        showCertificatesSelectedEntry();
+    }
+
+    /**
+     * Show the certificates details of the selected KeyStore entries.
+     */
+    public void showCertificatesSelectedEntry() {
         Set<X509Certificate> setCertificates = getCertificates();
         X509Certificate[] certs = setCertificates.toArray(new X509Certificate[0]);
         DViewCertificate dViewCertificate;
