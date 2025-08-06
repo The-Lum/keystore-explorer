@@ -1683,12 +1683,13 @@ public final class KseFrame implements StatusBar {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 try {
-                    int selectedRow = jtKeyStore.getSelectedRow();
+                    int selectedRowCount = jtKeyStore.getSelectedRowCount();
                     CursorUtil.setCursorBusy(frame);
-                    if (selectedRow == 1) {
+                    if (selectedRowCount == 1) {
+                        int selectedRow = jtKeyStore.getSelectedRow();
                         showSelectedEntryDetails(jtKeyStore, selectedRow);
                     }
-                    else if (selectedRow > 1) {
+                    else if (selectedRowCount > 1) {
                         selectedCertificatesChainDetailsAction.showCertificatesSelectedEntry();
                     }
                 } finally {
