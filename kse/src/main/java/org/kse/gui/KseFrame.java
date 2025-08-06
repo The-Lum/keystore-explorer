@@ -560,7 +560,7 @@ public final class KseFrame implements StatusBar {
     private static final String PASTE_KEY = "PASTE_KEY";
     private static final String RENAME_KEY = "RENAME_KEY";
     private static final String CONTEXT_MENU_KEY = "CONTEXT_MENU_KEY";
-    private static final String SUBTRACT_KEY = "SUBTRACT_KEY";
+    private static final String ENTER_KEY = "ENTER_KEY";
 
     public KseFrame() {
         initComponents();
@@ -1676,8 +1676,8 @@ public final class KseFrame implements StatusBar {
 
         // open keystore entry details when user presses enter key
         KeyStroke enter = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0);
-        jtKeyStore.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(enter, "Enter");
-        jtKeyStore.getActionMap().put("Enter", new AbstractAction() {
+        jtKeyStore.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(enter, ENTER_KEY);
+        jtKeyStore.getActionMap().put(ENTER_KEY, new AbstractAction() {
             private static final long serialVersionUID = 1L;
 
             @Override
