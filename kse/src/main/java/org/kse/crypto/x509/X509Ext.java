@@ -2714,7 +2714,14 @@ public class X509Ext {
                 ASN1ObjectIdentifier typeOid = ASN1ObjectIdentifier.getInstance(subSeq.getObjectAt(0));
                 // Value: [0] tagged object
                 ASN1TaggedObject innerTagged = ASN1TaggedObject.getInstance(subSeq.getObjectAt(1));
-                ASN1OctetString valueOctets = ASN1OctetString.getInstance(innerTagged.getObject());
+                ASN1OctetString valueOctets;
+                try {
+                    // Explicite
+                    valueOctets = ASN1OctetString.getInstance(innerTagged.getObject());
+                } catch (IllegalArgumentException ex) {
+                    // Implicite Fallback
+                    valueOctets = ASN1OctetString.getInstance(innerTagged, false);
+                }
                 byte[] valueBytes = valueOctets.getOctets();
                 sb.append("  Type OID: ").append(typeOid.getId()).append("\n");
                 String tryString = HexUtil.getHexString(valueBytes);
