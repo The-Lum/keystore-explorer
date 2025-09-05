@@ -2687,7 +2687,7 @@ public class X509Ext {
         return sb.toString();
     }
 
-    private static String getMsNtdsCaSecurityExtStringValue(byte[] octets) {
+    private static String getMsNtdsCaSecurityExtStringValue(byte[] octets) throws IOException {
 
         // @formatter:off
         /*
