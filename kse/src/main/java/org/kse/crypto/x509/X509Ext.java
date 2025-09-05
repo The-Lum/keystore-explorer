@@ -2687,7 +2687,7 @@ public class X509Ext {
         return sb.toString();
     }
 
-    private static String getMsNtdsCaSecurityExtStringValue(byte[] octets) throws IOException {
+    private static String getMsNtdsCaSecurityExtStringValue0(byte[] octets) throws IOException {
 
         // @formatter:off
         /*
@@ -2734,6 +2734,74 @@ public class X509Ext {
         } catch (Exception ex) {
             sb.append("[Error: Unable to parse AD extension ASN.1: ").append(ex.getMessage()).append("]\n");
             sb.append("Raw (hex): ").append(HexUtil.getHexClearDump(octets)).append("\n");
+        }
+        return sb.toString();
+    }
+
+    private static String getMsNtdsCaSecurityExtStringValue(byte[] octets) throws IOException {
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Active Directory Extension(s)\n");
+        try {
+            ASN1Sequence rootSeq = ASN1Sequence.getInstance(octets);
+            for (Enumeration<?> e = rootSeq.getObjects(); e.hasMoreElements(); ) {
+                Object element = e.nextElement();
+                ASN1Sequence subSeq = null;
+
+                // If the [first] element is a tagged object, parse with implicit = false
+                if (element instanceof ASN1TaggedObject) {
+                    subSeq = ASN1Sequence.getInstance((ASN1TaggedObject) element, false);
+                }
+                // If the element is a SEQUENCE, use it directly
+                else if (element instanceof ASN1Sequence) {
+                    subSeq = (ASN1Sequence) element;
+                }
+
+                if (subSeq != null) {
+                    sb.append(processMsNtdsCaSecurityExtSubSeq(subSeq));
+                } else {
+                    sb.append("  [Warning: Unexpected element type: ").append(element.getClass().getName()).append("]\n");
+                }
+            }
+        } catch (Exception ex) {
+            sb.append("[Error: Unable to parse AD extension ASN.1: ").append(ex.getMessage()).append("]\n");
+            sb.append("Raw (hex): ").append(HexUtil.getHexClearDump(octets)).append("\n");
+        }
+        return sb.toString();
+    }
+
+    private static String processMsNtdsCaSecurityExtSubSeq(ASN1Sequence subSeq) throws IOException {
+
+        // @formatter:off
+        /*
+            OtherName  ::= SEQUENCE
+            {
+                type-id     OBJECT IDENTIFIER,
+                value       OCTET STRING
+            }
+         */
+        // @formatter:on
+
+        StringBuilder sb = new StringBuilder();
+        try {
+            ASN1ObjectIdentifier typeOid = ASN1ObjectIdentifier.getInstance(subSeq.getObjectAt(0));
+            ASN1TaggedObject innerTagged = ASN1TaggedObject.getInstance(subSeq.getObjectAt(1));
+            ASN1OctetString valueOctets;
+            try {
+                valueOctets = ASN1OctetString.getInstance(innerTagged, true); // explicit tagging
+            } catch (IllegalArgumentException ex) {
+                valueOctets = ASN1OctetString.getInstance(innerTagged, false); // fallback for implicit tagging
+            }
+            byte[] valueBytes = valueOctets.getOctets();
+            sb.append("  Type OID: ").append(typeOid.getId()).append("\n");
+            String tryString = HexUtil.getHexString(valueBytes);
+            if (tryString.startsWith("S-")) {
+                sb.append("  SID: ").append(tryString).append("\n");
+            } else {
+                sb.append("  Value (hex): ").append(HexUtil.getHexClearDump(valueBytes)).append("\n");
+            }
+        } catch (Exception subex) {
+            sb.append("  [Error parsing sub-sequence: ").append(subex.getMessage()).append("]\n");
         }
         return sb.toString();
     }
