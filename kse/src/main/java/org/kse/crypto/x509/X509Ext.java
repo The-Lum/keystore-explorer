@@ -24,6 +24,7 @@ import static org.kse.crypto.x509.CertificatePolicyQualifierType.PKIX_USER_NOTIC
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -2724,7 +2725,7 @@ public class X509Ext {
                 }
                 byte[] valueBytes = valueOctets.getOctets();
                 sb.append("  Type OID: ").append(typeOid.getId()).append("\n");
-                String tryString = HexUtil.getHexString(valueBytes);
+                String tryString = new String(valueBytes, StandardCharsets.UTF_8);
                 if (tryString.startsWith("S-")) {
                     sb.append("  SID: ").append(tryString).append("\n");
                 } else {
@@ -2794,7 +2795,7 @@ public class X509Ext {
             }
             byte[] valueBytes = valueOctets.getOctets();
             sb.append("  Type OID: ").append(typeOid.getId()).append("\n");
-            String tryString = HexUtil.getHexString(valueBytes);
+            String tryString = new String(valueBytes, StandardCharsets.UTF_8);
             if (tryString.startsWith("S-")) {
                 sb.append("  SID: ").append(tryString).append("\n");
             } else {
