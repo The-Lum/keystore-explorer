@@ -2717,7 +2717,7 @@ public class X509Ext {
                 ASN1OctetString valueOctets;
                 try {
                     // Explicite
-                    valueOctets = ASN1OctetString.getInstance(innerTagged.getObject());
+                    valueOctets = ASN1OctetString.getInstance(innerTagged, true);
                 } catch (IllegalArgumentException ex) {
                     // Implicite Fallback
                     valueOctets = ASN1OctetString.getInstance(innerTagged, false);
