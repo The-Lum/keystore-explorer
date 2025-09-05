@@ -305,6 +305,8 @@ public class X509Ext {
             return getMsCertificateTemplateStringValue(octets);
         case MS_APPLICATION_POLICIES:
             return HexUtil.getHexClearDump(octets);
+        case MS_NTDS_CA_SECURITY_EXT:
+            return getMsNtdsCaSecurityExtStringValue(octets);
         case SMIME_CAPABILITIES:
             return getSMIMECapabilitiesStringValue(octets);
         case VS_CZAG:
@@ -2679,6 +2681,32 @@ public class X509Ext {
             sb.append(MessageFormat.format(res.getString("MSCertificateTemplate.MinorVersion"), minorVersion));
             sb.append(NEWLINE);
         }
+
+        return sb.toString();
+    }
+
+    private static String getMsNtdsCaSecurityExtStringValue(byte[] octets) {
+
+        // @formatter:off
+        /*
+            MSNtdSCaSecurityExt ::= SEQUENCE
+            {
+                type-id         OBJECT IDENTIFIER,
+                value           OCTET STRING
+            }
+         */
+        // @formatter:on
+
+        ASN1Sequence asn1Sequence = ASN1Sequence.getInstance(octets);
+        ASN1ObjectIdentifier typeId = (ASN1ObjectIdentifier) asn1Sequence.getObjectAt(0);
+        ASN1OctetString value = (ASN1OctetString) asn1Sequence.getObjectAt(1);
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(MessageFormat.format(res.getString("MSCertificateTemplate.ID"), typeId.getId()));
+        sb.append(NEWLINE);
+
+        sb.append(MessageFormat.format(res.getString("MSCertificateTemplate.MajorVersion"), HexUtil.getHexString(value.getOctets()))));
 
         return sb.toString();
     }
