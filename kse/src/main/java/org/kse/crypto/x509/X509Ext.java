@@ -27,6 +27,7 @@ import java.math.BigInteger;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -45,6 +46,7 @@ import org.bouncycastle.asn1.ASN1Primitive;
 import org.bouncycastle.asn1.ASN1PrintableString;
 import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.asn1.ASN1Set;
+import org.bouncycastle.asn1.ASN1TaggedObject;
 import org.bouncycastle.asn1.ASN1UTCTime;
 import org.bouncycastle.asn1.DERBitString;
 import org.bouncycastle.asn1.DERGeneralString;
@@ -2689,7 +2691,7 @@ public class X509Ext {
 
         // @formatter:off
         /*
-            MSNtdSCaSecurityExt ::= SEQUENCE
+            OtherName  ::= SEQUENCE
             {
                 type-id         OBJECT IDENTIFIER,
                 value           OCTET STRING
@@ -2697,17 +2699,35 @@ public class X509Ext {
          */
         // @formatter:on
 
-        ASN1Sequence asn1Sequence = ASN1Sequence.getInstance(octets);
-        ASN1ObjectIdentifier typeId = (ASN1ObjectIdentifier) asn1Sequence.getObjectAt(0);
-        ASN1OctetString value = (ASN1OctetString) asn1Sequence.getObjectAt(1);
-
         StringBuilder sb = new StringBuilder();
-
-        sb.append(MessageFormat.format(res.getString("MSCertificateTemplate.ID"), typeId.getId()));
-        sb.append(NEWLINE);
-
-        sb.append(MessageFormat.format(res.getString("MSCertificateTemplate.MajorVersion"), HexUtil.getHexString(value.getOctets())));
-
+        sb.append("Active Directory Extension(s)\n");
+        try {
+            ASN1Sequence rootSeq = ASN1Sequence.getInstance(octets);
+            for (Enumeration<?> e = rootSeq.getObjects(); e.hasMoreElements(); ) {
+                Object element = e.nextElement();
+                if (!(element instanceof ASN1Sequence)) {
+                    sb.append("  [Warning: Unexpected element type: ").append(element.getClass().getName()).append("]\n");
+                    continue;
+                }
+                ASN1Sequence subSeq = (ASN1Sequence) element;
+                // OID
+                ASN1ObjectIdentifier typeOid = ASN1ObjectIdentifier.getInstance(subSeq.getObjectAt(0));
+                // Value: [0] tagged object
+                ASN1TaggedObject innerTagged = ASN1TaggedObject.getInstance(subSeq.getObjectAt(1));
+                ASN1OctetString valueOctets = ASN1OctetString.getInstance(innerTagged.getObject());
+                byte[] valueBytes = valueOctets.getOctets();
+                sb.append("  Type OID: ").append(typeOid.getId()).append("\n");
+                String tryString = HexUtil.getHexString(valueBytes);
+                if (tryString.startsWith("S-")) {
+                    sb.append("  SID: ").append(tryString).append("\n");
+                } else {
+                    sb.append("  Value (hex): ").append(HexUtil.getHexClearDump(valueBytes)).append("\n");
+                }
+            }
+        } catch (Exception ex) {
+            sb.append("[Error: Unable to parse AD extension ASN.1: ").append(ex.getMessage()).append("]\n");
+            sb.append("Raw (hex): ").append(HexUtil.getHexClearDump(octets)).append("\n");
+        }
         return sb.toString();
     }
 
