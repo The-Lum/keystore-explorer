@@ -2706,7 +2706,7 @@ public class X509Ext {
         sb.append(MessageFormat.format(res.getString("MSCertificateTemplate.ID"), typeId.getId()));
         sb.append(NEWLINE);
 
-        sb.append(MessageFormat.format(res.getString("MSCertificateTemplate.MajorVersion"), HexUtil.getHexString(value.getOctets()))));
+        sb.append(MessageFormat.format(res.getString("MSCertificateTemplate.MajorVersion"), HexUtil.getHexString(value.getOctets())));
 
         return sb.toString();
     }
