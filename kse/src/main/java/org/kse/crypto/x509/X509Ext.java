@@ -2753,17 +2753,17 @@ public class X509Ext {
                 typeOidTypeStr = ObjectIdUtil.toString(typeOid);
             }
 
-            sb.append(MessageFormat.format(res.getString("MSNtdsCaSecurityExt.Type.ID"), typeOidTypeStr);
+            sb.append(MessageFormat.format(res.getString("MSNtdsCaSecurityExt.Type.ID"), typeOidTypeStr));
             sb.append(NEWLINE);
 
             String valueStr = new String(valueBytes, StandardCharsets.UTF_8);
             if !(valueStr.startsWith("S-"))
                 valueStr = HexUtil.getHexClearDump(valueBytes);
 
-            sb.append(MessageFormat.format(res.getString("MSNtdsCaSecurityExt.Value"), valueStr);
+            sb.append(MessageFormat.format(res.getString("MSNtdsCaSecurityExt.Value"), valueStr));
             sb.append(NEWLINE);
         } catch (Exception subex) {
-            sb.append(MessageFormat.format(res.getString("MSNtdsCaSecurityExt.Parse.SubSeq.Error"), subex.getMessage()).append(NEWLINE);
+            sb.append(MessageFormat.format(res.getString("MSNtdsCaSecurityExt.Parse.SubSeq.Error"), subex.getMessage())).append(NEWLINE);
         }
         return sb.toString();
     }
