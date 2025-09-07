@@ -2709,11 +2709,11 @@ public class X509Ext {
                 if (subSeq != null) {
                     sb.append(processMsNtdsCaSecurityExtSubSeq(subSeq));
                 } else {
-                    sb.append(MessageFormat.format(res.getString("MSNtdsCaSecurityExt.Unexpected.Element.Warning"), element.getClass().getName()).append(NEWLINE);
+                    sb.append(MessageFormat.format(res.getString("MSNtdsCaSecurityExt.Unexpected.Element.Warning"), element.getClass().getName())).append(NEWLINE);
                 }
             }
         } catch (Exception ex) {
-            sb.append(MessageFormat.format(res.getString("Extension.Parse.Error"), ex.getMessage()).append(NEWLINE);
+            sb.append(MessageFormat.format(res.getString("Extension.Parse.Error"), ex.getMessage())).append(NEWLINE);
             sb.append(HexUtil.getHexClearDump(octets)).append(NEWLINE);
         }
         return sb.toString();
