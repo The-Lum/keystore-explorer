@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
  * Enumeration of MS_NTDS_CA_SECURITY_EXT (1.3.6.1.4.1.311.25.2).
  */
 public enum MSNtdsCaSecurityExtType {
-    MS_SID("1.3.6.1.4.1.311.25.2.1", "MSNtdsObjectSid")
+    MS_SID("1.3.6.1.4.1.311.25.2.1", "MSNtdsObjectSid");
 
     private static ResourceBundle res = ResourceBundle.getBundle("org/kse/crypto/x509/resources");
     private String oid;
