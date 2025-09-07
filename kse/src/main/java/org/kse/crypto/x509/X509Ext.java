@@ -2688,61 +2688,9 @@ public class X509Ext {
         return sb.toString();
     }
 
-    private static String getMsNtdsCaSecurityExtStringValue0(byte[] octets) throws IOException {
-
-        // @formatter:off
-        /*
-            OtherName  ::= SEQUENCE
-            {
-                type-id         OBJECT IDENTIFIER,
-                value           OCTET STRING
-            }
-         */
-        // @formatter:on
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("Active Directory Extension(s)\n");
-        try {
-            ASN1Sequence rootSeq = ASN1Sequence.getInstance(octets);
-            for (Enumeration<?> e = rootSeq.getObjects(); e.hasMoreElements(); ) {
-                Object element = e.nextElement();
-                if (!(element instanceof ASN1Sequence)) {
-                    sb.append("  [Warning: Unexpected element type: ").append(element.getClass().getName()).append("]\n");
-                    continue;
-                }
-                ASN1Sequence subSeq = (ASN1Sequence) element;
-                // OID
-                ASN1ObjectIdentifier typeOid = ASN1ObjectIdentifier.getInstance(subSeq.getObjectAt(0));
-                // Value: [0] tagged object
-                ASN1TaggedObject innerTagged = ASN1TaggedObject.getInstance(subSeq.getObjectAt(1));
-                ASN1OctetString valueOctets;
-                try {
-                    // Explicite
-                    valueOctets = ASN1OctetString.getInstance(innerTagged, true);
-                } catch (IllegalArgumentException ex) {
-                    // Implicite Fallback
-                    valueOctets = ASN1OctetString.getInstance(innerTagged, false);
-                }
-                byte[] valueBytes = valueOctets.getOctets();
-                sb.append("  Type OID: ").append(typeOid.getId()).append("\n");
-                String tryString = new String(valueBytes, StandardCharsets.UTF_8);
-                if (tryString.startsWith("S-")) {
-                    sb.append("  SID: ").append(tryString).append("\n");
-                } else {
-                    sb.append("  Value (hex): ").append(HexUtil.getHexClearDump(valueBytes)).append("\n");
-                }
-            }
-        } catch (Exception ex) {
-            sb.append("[Error: Unable to parse AD extension ASN.1: ").append(ex.getMessage()).append("]\n");
-            sb.append("Raw (hex): ").append(HexUtil.getHexClearDump(octets)).append("\n");
-        }
-        return sb.toString();
-    }
-
     private static String getMsNtdsCaSecurityExtStringValue(byte[] octets) throws IOException {
 
         StringBuilder sb = new StringBuilder();
-        sb.append("Active Directory Extension(s)\n");
         try {
             ASN1Sequence rootSeq = ASN1Sequence.getInstance(octets);
             for (Enumeration<?> e = rootSeq.getObjects(); e.hasMoreElements(); ) {
@@ -2761,12 +2709,12 @@ public class X509Ext {
                 if (subSeq != null) {
                     sb.append(processMsNtdsCaSecurityExtSubSeq(subSeq));
                 } else {
-                    sb.append("  [Warning: Unexpected element type: ").append(element.getClass().getName()).append("]\n");
+                    sb.append(MessageFormat.format(res.getString("MSNtdsCaSecurityExt.Unexpected.Element.Warning"), element.getClass().getName()).append(NEWLINE);
                 }
             }
         } catch (Exception ex) {
-            sb.append("[Error: Unable to parse AD extension ASN.1: ").append(ex.getMessage()).append("]\n");
-            sb.append("Raw (hex): ").append(HexUtil.getHexClearDump(octets)).append("\n");
+            sb.append(MessageFormat.format(res.getString("Extension.Parse.Error"), ex.getMessage()).append(NEWLINE);
+            sb.append(HexUtil.getHexClearDump(octets)).append(NEWLINE);
         }
         return sb.toString();
     }
@@ -2794,15 +2742,28 @@ public class X509Ext {
                 valueOctets = ASN1OctetString.getInstance(innerTagged, false); // fallback for implicit tagging
             }
             byte[] valueBytes = valueOctets.getOctets();
-            sb.append("  Type OID: ").append(typeOid.getId()).append("\n");
-            String tryString = new String(valueBytes, StandardCharsets.UTF_8);
-            if (tryString.startsWith("S-")) {
-                sb.append("  SID: ").append(tryString).append("\n");
+
+            MSNtdsCaSecurityExtType typeOidType = MSNtdsCaSecurityExtType.resolveOid(typeOid.getId());
+            String typeOidTypeStr = null;
+
+            if (typeOidType != null) {
+                typeOidTypeStr = typeOidType.friendly();
             } else {
-                sb.append("  Value (hex): ").append(HexUtil.getHexClearDump(valueBytes)).append("\n");
+                // Unrecognised Type OID
+                typeOidTypeStr = ObjectIdUtil.toString(typeOid);
             }
+
+            sb.append(MessageFormat.format(res.getString("MSNtdsCaSecurityExt.Type.ID"), typeOidTypeStr);
+            sb.append(NEWLINE);
+
+            String valueStr = new String(valueBytes, StandardCharsets.UTF_8);
+            if !(valueStr.startsWith("S-"))
+                valueStr = HexUtil.getHexClearDump(valueBytes);
+
+            sb.append(MessageFormat.format(res.getString("MSNtdsCaSecurityExt.Value"), valueStr);
+            sb.append(NEWLINE);
         } catch (Exception subex) {
-            sb.append("  [Error parsing sub-sequence: ").append(subex.getMessage()).append("]\n");
+            sb.append(MessageFormat.format(res.getString("MSNtdsCaSecurityExt.Parse.SubSeq.Error"), subex.getMessage()).append(NEWLINE);
         }
         return sb.toString();
     }
