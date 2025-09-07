@@ -2757,7 +2757,7 @@ public class X509Ext {
             sb.append(NEWLINE);
 
             String valueStr = new String(valueBytes, StandardCharsets.UTF_8);
-            if !(valueStr.startsWith("S-"))
+            if (!(valueStr.startsWith("S-")))
                 valueStr = HexUtil.getHexClearDump(valueBytes);
 
             sb.append(MessageFormat.format(res.getString("MSNtdsCaSecurityExt.Value"), valueStr));
