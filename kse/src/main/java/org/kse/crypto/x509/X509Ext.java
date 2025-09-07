@@ -2762,6 +2762,7 @@ public class X509Ext {
 
             sb.append(MessageFormat.format(res.getString("MSNtdsCaSecurityExt.Value"), valueStr));
             sb.append(NEWLINE);
+            sb.append(NEWLINE);
         } catch (Exception subex) {
             sb.append(MessageFormat.format(res.getString("MSNtdsCaSecurityExt.Parse.SubSeq.Error"), subex.getMessage())).append(NEWLINE);
         }
