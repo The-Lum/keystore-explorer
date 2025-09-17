@@ -2741,7 +2741,7 @@ public class X509Ext {
                 sb.append(type.friendly());
             } else {
                 // Unrecognised key purpose ID
-                sb.append(ObjectIdUtil.toString(keyPurposeId);
+                sb.append(ObjectIdUtil.toString(keyPurposeId));
             }
             sb.append(NEWLINE);
         }
