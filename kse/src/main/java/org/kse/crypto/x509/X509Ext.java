@@ -327,6 +327,8 @@ public class X509Ext {
             return getVeriSignNonVerified(octets);
         case GO_CT_SCTS:
             return getSCTs(octets);
+        case MASA_URL:
+            return getIA5String(octets);
         default:
             // X509Extension not recognized or means to output it not defined - just dump out hex and clear text
             return HexUtil.getHexClearDump(octets);

@@ -320,6 +320,13 @@ public enum X509ExtensionType {
 
 
     // ////////////////////////////////
+    // RFC 8995 - Bootstrapping Remote Secure Key Infrastructure (BRSKI)
+    // ////////////////////////////////
+
+    MASA_URL("1.3.6.1.5.5.7.1.32", "MasaURL"),
+
+
+    // ////////////////////////////////
     // SET (Secure Electronic Transaction)
     // ////////////////////////////////
 
